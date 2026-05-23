@@ -7,9 +7,14 @@ from pages.login_page import LoginPage
 
 @pytest.fixture(scope="session")
 def browser():
-    """启动本地 Edge 浏览器（Windows 自带，无需下载）"""
+    """启动浏览器，本地用 Edge，CI 环境用 Chromium"""
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="msedge", headless=False)
+        if os.getenv("CI"):
+            # GitHub Actions 环境：使用 Playwright 自带的 Chromium
+            browser = p.chromium.launch(headless=True)
+        else:
+            # 本地环境：使用你电脑上的 Edge 浏览器
+            browser = p.chromium.launch(channel="msedge", headless=False)
         yield browser
         browser.close()
 
