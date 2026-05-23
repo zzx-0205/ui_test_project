@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+
+# pytest
+.pytest_cache/
+
+# 截图（本地生成，不提交）
+screenshots/
+
+# IDE
+.vscode/
+.idea/
